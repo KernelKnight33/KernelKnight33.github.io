@@ -392,6 +392,30 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
         }
+        
+        /* === NEW CSS FOR PROJECT BUTTONS === */
+        .project-button {
+            display: inline-block;
+            padding: 10px 25px; /* Smaller padding */
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #0a0a0a;
+            text-decoration: none;
+            font-size: 16px; /* Smaller font */
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            margin-top: 25px; /* Add space above it */
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); /* Smaller shadow */
+            letter-spacing: 1px;
+            border: none;
+        }
+
+        .project-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5); /* Stronger hover shadow */
+        }
+        /* === END OF NEW CSS === */
+
 
         /* Footer */
         footer {
@@ -544,7 +568,9 @@
             <div class="logo">⚔️ KNIGHT'S DOMAIN</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li> <li><a href="#weapons">Armory</a></li>
+                <li><a href="#about">About</a></li> 
+                <li><a href="#weapons">Armory</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#stats">Stats</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -600,6 +626,24 @@
                     <div class="weapon-icon">🪓</div>
                     <h3>BERSERKER'S AXE</h3>
                     <p>Double-headed fury that drinks deep of enemy blood. In the heat of battle, it seems to guide itself to the next victim.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="weapons" id="projects">
+            <h2 class="section-title">ENGINEERING FORGE</h2>
+            <div class="weapons-grid">
+                <div class="weapon-card">
+                    <div class="weapon-icon">🦅</div>
+                    <h3>MECHANICAL SKY-SCOUT</h3>
+                    <p>A remote-controlled ornithopter. This prototype, forged from lightweight materials, mimics the flight of a bird to perform reconnaissance over the battlefield.</p>
+                    <a href="https://github.com/MAX090706/RC-ORNITHOPTER" class="project-button" target="_blank" rel="noopener noreferrer">View Project</a>
+                </div>
+                <div class="weapon-card">
+                    <div class="weapon-icon">🤖</div>
+                    <h3>AUTONOMOUS PATHFINDER</h3>
+                    <p>A loyal line-following bot. This automaton is enchanted to follow a set path, proving its worth for delivering supplies or messages through complex castle corridors.</p>
+                    <a href="https://github.com/SRA-VJTI/Wall-E" class="project-button" target="_blank" rel="noopener noreferrer">View Project</a>
                 </div>
             </div>
         </section>
