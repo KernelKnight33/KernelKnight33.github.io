@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knight's Domain</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=MedievalSharp&display=swap');
         
@@ -250,7 +251,6 @@
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
             opacity: 0;
             transition: opacity 0.3s ease;
-            /* This pseudo-element is what was blocking the click */
         }
 
         .weapon-card:hover::before {
@@ -356,6 +356,40 @@
             font-weight: 600;
         }
 
+        /* === NEW CSS FOR NAME HOVER === */
+        .name-hover-container {
+            position: relative;
+            cursor: default;
+        }
+        
+        .hover-image-container {
+            position: absolute;
+            bottom: 110%; /* Position above the name */
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 10;
+            pointer-events: none; /* Prevents flicker */
+        }
+        
+        .hover-image-container img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%; /* Circular image */
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .name-hover-container:hover .hover-image-container {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* === END OF NAME HOVER CSS === */
+
+
         .cta-button {
             display: inline-block;
             padding: 18px 45px;
@@ -393,32 +427,28 @@
             box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
         }
         
-        /* === UPDATED CSS FOR PROJECT BUTTONS === */
         .project-button {
             display: inline-block;
-            padding: 10px 25px; /* Smaller padding */
+            padding: 10px 25px;
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             color: #0a0a0a;
             text-decoration: none;
-            font-size: 16px; /* Smaller font */
+            font-size: 16px;
             font-weight: 700;
             border-radius: 50px;
             transition: all 0.3s ease;
-            margin-top: 25px; /* Add space above it */
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); /* Smaller shadow */
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
             letter-spacing: 1px;
             border: none;
-            
-            /* === THE FIX === */
             position: relative;
-            z-index: 2;
+            z-index: 2; /* Lifts button above hover effects */
         }
 
         .project-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5); /* Stronger hover shadow */
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
         }
-        /* === END OF FIX === */
 
 
         /* Footer */
@@ -430,12 +460,33 @@
             background: rgba(5, 5, 15, 0.5);
             backdrop-filter: blur(5px);
         }
+        
+        /* === NEW CSS FOR SOCIAL LINKS === */
+        .social-links {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .social-links a {
+            color: #c0c0c0;
+            text-decoration: none;
+            font-size: 32px; /* Icon size */
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #ffd700;
+            transform: translateY(-3px);
+        }
+        /* === END OF SOCIAL LINK CSS === */
 
         footer p {
             color: #808080;
             font-size: 16px;
             letter-spacing: 1px;
-            margin-top: 30px; /* ADDED this line for spacing */
+            margin-top: 25px; /* Adjusted spacing */
         }
 
         /* Responsive */
@@ -464,6 +515,10 @@
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hover-image-container {
+                display: none; /* Hide hover image on mobile */
             }
         }
 
@@ -590,10 +645,16 @@
 
         <section class="about" id="about">
             <h2 class="section-title">THE KNIGHT'S VIGIL</h2>
-            <p>I am <strong>Dhruv Balram Gowda</strong>, a knight in training at the <strong>VJTI institute in Mumbai</strong>. I'm mastering the craft of <strong>Electrical Engineering</strong>, with my quest set to be complete in <strong>2028</strong>.</p>
+            <p>I am 
+                <strong class="name-hover-container">Dhruv Balram Gowda
+                    <span class="hover-image-container">
+                        <img src="dhruv-photo.jpg" alt="Dhruv Gowda">
+                    </span>
+                </strong>, 
+                a knight in training at the <strong>VJTI institute in Mumbai</strong>. I'm mastering the craft of <strong>Electrical Engineering</strong>, with my quest set to be complete in <strong>2028</strong>.</p>
             <p>I also serve as an intern at <strong>superr.ai</strong>, gaining real-world experience and honing my skills for the battles to come.</p>
             
-            </section>
+        </section>
 
         <section class="weapons" id="weapons">
             <h2 class="section-title">⚔️ ARSENAL OF WAR ⚔️</h2>
@@ -615,7 +676,6 @@
                     <div class="weapon-icon">🏹</div>
                     <h3>SHADOWBOW</h3>
                     <p>Silent death from afar. Arrows fly true even in pitch darkness, guided by the spirits of fallen rangers. Each shot whispers a funeral dirge.</p>
-
                 </div>
                 <div class="weapon-card">
                     <div class="weapon-icon">🗡️</div>
@@ -678,6 +738,11 @@
     </div>
 
     <footer id="contact">
+        <div class="social-links">
+            <a href="https://github.com/KernelKnight33" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/dhruv-gowda-822343383/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+        </div>
+        
         <a href="mailto:dhruvgowda09@gmail.com" class="cta-button">SEND A MISSIVE</a>
         <p>&copy; 2024 KNIGHT'S DOMAIN. ALL RIGHTS RESERVED. ⚔️</p>
     </footer>
