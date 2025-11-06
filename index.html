@@ -250,6 +250,7 @@
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), transparent);
             opacity: 0;
             transition: opacity 0.3s ease;
+            /* This pseudo-element is what was blocking the click */
         }
 
         .weapon-card:hover::before {
@@ -392,7 +393,7 @@
             box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
         }
         
-        /* === CSS FOR PROJECT BUTTONS === */
+        /* === UPDATED CSS FOR PROJECT BUTTONS === */
         .project-button {
             display: inline-block;
             padding: 10px 25px; /* Smaller padding */
@@ -407,13 +408,17 @@
             box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); /* Smaller shadow */
             letter-spacing: 1px;
             border: none;
+            
+            /* === THE FIX === */
+            position: relative;
+            z-index: 2;
         }
 
         .project-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5); /* Stronger hover shadow */
         }
-        /* === END OF NEW CSS === */
+        /* === END OF FIX === */
 
 
         /* Footer */
@@ -610,6 +615,7 @@
                     <div class="weapon-icon">🏹</div>
                     <h3>SHADOWBOW</h3>
                     <p>Silent death from afar. Arrows fly true even in pitch darkness, guided by the spirits of fallen rangers. Each shot whispers a funeral dirge.</p>
+
                 </div>
                 <div class="weapon-card">
                     <div class="weapon-icon">🗡️</div>
