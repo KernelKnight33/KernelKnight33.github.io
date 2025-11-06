@@ -355,8 +355,20 @@
             color: #ffd700;
             font-weight: 600;
         }
+        
+        /* CSS FOR LINKS IN ABOUT SECTION */
+        .about p a {
+            color: inherit; /* This makes the link gold (or white) */
+            text-decoration: none; /* Removes the underline */
+            transition: all 0.3s ease;
+        }
+        .about p a:hover {
+            text-decoration: underline; /* Adds underline on hover */
+            filter: brightness(1.2); /* Makes it slightly brighter */
+        }
+        /* END OF NEW CSS */
 
-        /* === NEW CSS FOR NAME HOVER === */
+        /* CSS FOR NAME HOVER & ALL IMAGE HOVERS */
         .name-hover-container {
             position: relative;
             cursor: default;
@@ -364,7 +376,7 @@
         
         .hover-image-container {
             position: absolute;
-            bottom: 110%; /* Position above the name */
+            bottom: 110%; /* Position above the text */
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
@@ -372,13 +384,14 @@
             transition: opacity 0.3s ease, visibility 0.3s ease;
             z-index: 10;
             pointer-events: none; /* Prevents flicker */
+            /* Default width/height, can be adjusted per image if needed */
         }
         
         .hover-image-container img {
-            width: 150px;
-            height: 150px;
+            width: 150px; /* Square width */
+            height: 150px; /* Square height */
             object-fit: cover;
-            border-radius: 50%; /* Circular image */
+            border-radius: 0%; /* === CHANGED TO SQUARE (0%) === */
             border: 3px solid #ffd700;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
@@ -387,7 +400,7 @@
             opacity: 1;
             visibility: visible;
         }
-        /* === END OF NAME HOVER CSS === */
+        /* END OF IMAGE HOVER CSS */
 
 
         .cta-button {
@@ -461,7 +474,7 @@
             backdrop-filter: blur(5px);
         }
         
-        /* === NEW CSS FOR SOCIAL LINKS === */
+        /* CSS FOR SOCIAL LINKS */
         .social-links {
             margin-bottom: 30px;
             display: flex;
@@ -480,7 +493,7 @@
             color: #ffd700;
             transform: translateY(-3px);
         }
-        /* === END OF SOCIAL LINK CSS === */
+        /* END OF SOCIAL LINK CSS */
 
         footer p {
             color: #808080;
@@ -651,7 +664,21 @@
                         <img src="dhruv-photo.jpg" alt="Dhruv Gowda">
                     </span>
                 </strong>, 
-                a knight in training at the <strong>VJTI institute in Mumbai</strong>. I'm mastering the craft of <strong>Electrical Engineering</strong>, with my quest set to be complete in <strong>2028</strong>.</p>
+                a knight in training at the 
+                <strong class="name-hover-container">
+                    <a href="https://en.wikipedia.org/wiki/Veermata_Jijabai_Technological_Institute" target="_blank" rel="noopener noreferrer">VJTI institute</a>
+                    <span class="hover-image-container">
+                        <img src="vjti.jpeg" alt="VJTI">
+                    </span>
+                </strong>
+                in 
+                <strong class="name-hover-container">
+                    <a href="https://en.wikipedia.org/wiki/Mumbai" target="_blank" rel="noopener noreferrer">Mumbai</a>
+                    <span class="hover-image-container">
+                        <img src="Mumbai.jpeg" alt="Mumbai">
+                    </span>
+                </strong>. 
+                I'm mastering the craft of <strong>Electrical Engineering</strong>, with my quest set to be complete in <strong>2028</strong>.</p>
             <p>I also serve as an intern at <strong>superr.ai</strong>, gaining real-world experience and honing my skills for the battles to come.</p>
             
         </section>
