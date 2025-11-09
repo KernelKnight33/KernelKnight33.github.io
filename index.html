@@ -38,7 +38,6 @@
             overflow: hidden;
         }
 
-        /* REVERTED TO ORIGINAL SVG STYLING */
         .knight-bg {
             position: absolute;
             right: 5%;
@@ -119,7 +118,33 @@
             color: #ffd700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
             letter-spacing: 2px;
+            display: flex;
+            align-items: center;
         }
+        
+        /* === LOGO IMAGE UPDATED WITH HOVER FIX === */
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 0%; 
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            
+            transition: all 0.3s ease;
+            position: relative; 
+            z-index: 1001; 
+            
+            /* === THIS IS THE FIX === */
+            transform-origin: top center; 
+        }
+        
+        .logo-img:hover {
+            transform: scale(3.0); /* Makes it 3x bigger */
+            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.6); /* Adds a bigger glow */
+        }
+        /* === END OF LOGO UPDATE === */
 
         .nav-links {
             display: flex;
@@ -517,6 +542,17 @@
             .nav-links {
                 display: none;
             }
+
+            /* === NEW RESPONSIVE LOGO STYLES (ADJUSTED) === */
+            .logo {
+                font-size: 20px; /* Make text smaller */
+            }
+            .logo-img {
+                width: 40px; /* Make image smaller for mobile */
+                height: 40px;
+                margin-right: 10px;
+            }
+            /* === END OF RESPONSIVE LOGO === */
             
             .knight-bg {
                 height: 60%;
@@ -639,7 +675,10 @@
 
     <nav id="navbar">
         <div class="nav-content">
-            <div class="logo">⚔️ KNIGHT'S DOMAIN</div>
+            <div class="logo">
+                <img src="logo.jpg" alt="Logo" class="logo-img"> 
+                KNIGHT'S DOMAIN
+            </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li> 
@@ -682,7 +721,7 @@
                 </strong>. 
                 I'm mastering the craft of <strong>Electrical Engineering</strong>, with my quest set to be complete in <strong>2028</strong>.</p>
             <p>I also serve as an intern at <strong>superr.ai</strong>, gaining real-world experience and honing my skills for the battles to come.</p>
-            
+            <p>When not at the forge, I am a dedicated weeb exploring the vast worlds of anime, manga, and manhwa. I also find peace in the arts of the mess hall (Cooking), listening to anthems of old (Music), and studying the designs of swift, mechanical steeds (Cars).</p>
         </section>
 
         <section class="weapons" id="weapons">
