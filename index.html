@@ -122,7 +122,6 @@
             align-items: center;
         }
         
-        /* === LOGO IMAGE UPDATED WITH HOVER FIX === */
         .logo-img {
             width: 50px;
             height: 50px;
@@ -135,16 +134,13 @@
             transition: all 0.3s ease;
             position: relative; 
             z-index: 1001; 
-            
-            /* === THIS IS THE FIX === */
             transform-origin: top center; 
         }
         
         .logo-img:hover {
-            transform: scale(3.0); /* Makes it 3x bigger */
-            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.6); /* Adds a bigger glow */
+            transform: scale(3.0); 
+            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.6); 
         }
-        /* === END OF LOGO UPDATE === */
 
         .nav-links {
             display: flex;
@@ -181,6 +177,15 @@
         .nav-links a:hover::after {
             width: 100%;
         }
+        
+        .nav-links a.active {
+            color: #ffd700; /* Makes the text gold */
+        }
+        
+        .nav-links a.active::after {
+            width: 100%; /* Shows the underline */
+        }
+
 
         /* Main content */
         .container {
@@ -429,6 +434,15 @@
         }
         /* END OF IMAGE HOVER CSS */
 
+        /* === NEW SKILL HIGHLIGHT CSS === */
+        .skill-highlight {
+            color: #ffd700;
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+            letter-spacing: 0.5px;
+        }
+        /* === END OF NEW CSS === */
+
 
         .cta-button {
             display: inline-block;
@@ -543,7 +557,6 @@
                 display: none;
             }
 
-            /* === NEW RESPONSIVE LOGO STYLES (ADJUSTED) === */
             .logo {
                 font-size: 20px; /* Make text smaller */
             }
@@ -552,7 +565,6 @@
                 height: 40px;
                 margin-right: 10px;
             }
-            /* === END OF RESPONSIVE LOGO === */
             
             .knight-bg {
                 height: 60%;
@@ -682,7 +694,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li> 
-                <li><a href="#weapons">Armory</a></li>
+                <li><a href="#weapons">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#stats">Stats</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -721,23 +733,29 @@
                 </strong>. 
                 I'm mastering the craft of <strong>Electrical Engineering</strong>, with my quest set to be complete in <strong>2028</strong>.</p>
             <p>I also serve as an intern at <strong>superr.ai</strong>, gaining real-world experience and honing my skills for the battles to come.</p>
-            <p>When not at the forge, I am a dedicated weeb exploring the vast worlds of anime, manga, and manhwa. I also find peace in the arts of the mess hall (Cooking), listening to anthems of old (Music), and studying the designs of swift, mechanical steeds (Cars).</p>
+            <p>When not at the forge, I am a dedicated weeb exploring the vast worlds of anime, manga, and manhwa. I also find peace in the arts of the mess hall (<span class="skill-highlight">Cooking</span>), listening to anthems of old (<span class="skill-highlight">Music</span>), and studying the designs of swift, mechanical steeds (<span class="skill-highlight">Cars</span>).</p>
         </section>
 
         <section class="weapons" id="weapons">
-            <h2 class="section-title">⚔️ ARSENAL OF WAR ⚔️</h2>
+            <h2 class="section-title">⚔️ SKILLS ⚔️</h2>
             <div class="weapons-grid">
+                
+                <div class="weapon-card">
+                    <div class="weapon-icon">🛠️</div>
+                    <h3>CIRCUIT SMITHING</h3>
+                    <p>The hands-on art of the forge, joining components with fire and metal (<span class="skill-highlight">Prototyping / Soldering</span>) to create flawless, functional hardware.</p>
+                </div>
                 
                 <div class="weapon-card">
                     <div class="weapon-icon">⚙️</div>
                     <h3>FORGE BLUEPRINTS</h3>
-                    <p>A good design is the first step to victory. I create detailed schematics (CAD) for everything from siege engines to strongholds.</p>
+                    <p>A good design is the first step to victory. I create detailed schematics (<span class="skill-highlight">CAD</span>) for everything from siege engines to strongholds.</p>
                 </div>
 
                 <div class="weapon-card">
                     <div class="weapon-icon">🧪</div>
                     <h3>MESS HALL PROVISIONS</h3>
-                    <p>A knight is only as strong as their last meal. I craft provisions (Cooking) that can fuel a warrior for the march and the melee.</p>
+                    <p>A knight is only as strong as their last meal. I craft provisions (<span class="skill-highlight">Cooking</span>) that can fuel a warrior for the march and the melee.</p>
                 </div>
                 
                 <div class="weapon-card">
@@ -754,11 +772,6 @@
                     <div class="weapon-icon">🔨</div>
                     <h3>WARHAMMER</h3>
                     <p>The knight's choice for heavily armored foes. Crushes plate mail like paper. The sound of its impact is music to the victor's ears.</p>
-                </div>
-                <div class="weapon-card">
-                    <div class="weapon-icon">🪓</div>
-                    <h3>BERSERKER'S AXE</h3>
-                    <p>Double-headed fury that drinks deep of enemy blood. In the heat of battle, it seems to guide itself to the next victim.</p>
                 </div>
             </div>
         </section>
@@ -891,7 +904,43 @@
             observer.observe(el);
         });
         
-        // Removed the parallax scroll script to allow the CSS float animation to work
+        
+        // === NEW SCRIPT FOR ACTIVE NAVIGATION ===
+        
+        // Select all sections and the footer
+        const sections = document.querySelectorAll('section[id], footer[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        const activeNavObserverOptions = {
+            root: null,
+            rootMargin: '-40% 0px -60% 0px', // Triggers when section is in the middle 40-60% of viewport
+            threshold: 0
+        };
+
+        const activeNavObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    
+                    // Remove 'active' from all links
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                    });
+
+                    // Add 'active' to the matching link
+                    const activeLink = document.querySelector(`.nav-links a[href="#${id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, activeNavObserverOptions);
+
+        // Observe each section and the footer
+        sections.forEach(section => {
+            activeNavObserver.observe(section);
+        });
+        // === END OF NEW SCRIPT ===
     </script>
 </body>
 </html>
