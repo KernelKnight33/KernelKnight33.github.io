@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Knight's Domain | Dhruv B Gowda</title>
+  
+  <link rel="icon" href="favicon.png"> 
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background-color: #0b132b;
+      color: #e0fbfc;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .hero-bg {
+      background-image: url('hero-aura.jpg'); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      height: 100vh;
+      position: relative;
+    }
+
+    .hero-overlay {
+      background: radial-gradient(ellipse at center, rgba(9, 20, 40, 0.3) 0%, rgba(15, 30, 60, 0.9) 100%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      
+    }
+
+    .glow-text {
+      text-shadow: 0 0 10px #f97316, 0 0 20px #fbbf24, 0 0 30px #ea580c;
+      color: #ffffff;
+    }
+
+    .azure-glow {
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.7);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .skill-bar {
+      height: 8px;
+      background: linear-gradient(90deg, #1c2a48, #253659);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0 16px;
+      border: 1px solid #3a4d78;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background: linear-gradient(90deg, #ea580c, #fbbf24, #ea580c);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      transition: width 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+      animation: skillGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes skillGlow {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    .scroll-down {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-20px);
+      }
+      60% {
+        transform: translateY(-10px);
+      }
+    }
+
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #f97316, transparent);
+      background-size: 200% 100%;
+      animation: progressMove 1s linear infinite;
+      z-index: 50;
+      transition: width 0.1s ease;
+    }
+
+    @keyframes progressMove {
+      0% { background-position: -100% 0; }
+      100% { background-position: 100% 0; }
+    }
+
+    .project-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.1), transparent);
+      transition: left 1s ease;
+    }
+
+    .project-card:hover::before {
+      left: 100%;
+    }
+
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-card:hover {
+      transform: scale(1.02);
+      border-color: #f97316;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(9, 20, 40, 0.95);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      position: relative;
+      animation: modalFadeIn 0.5s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-img {
+      max-width: 90%; 
+      max-height: 90vh; 
+      aspect-ratio: 1/1; /* Make it square */
+      object-fit: contain; /* Ensure the image fits without cropping */
+      border: 3px solid #f97316;
+      box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .modal-img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(249, 115, 22, 0.7);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -60px;
+      right: 0;
+      color: #fff;
+      font-size: 30px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-modal:hover {
+      color: #f97316;
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0b132b;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #f97316;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #fbbf24;
+    }
+
+    /* Knight emblem decoration */
+    .emblem {
+      position: fixed;
+      width: 100px;
+      height: 100px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,10 L70,30 L65,55 L50,70 L35,55 L30,30 Z" fill="none" stroke="%23f97316" stroke-width="2"/><circle cx="50" cy="45" r="15" fill="none" stroke="%23f97316" stroke-width="2"/><path d="M50,30 L50,60 M40,40 L60,40" stroke="%23f97316" stroke-width="2"/></svg>') no-repeat center;
+      background-size: contain;
+      opacity: 0.1;
+      z-index: 1;
+    }
+
+    .emblem.tl { top: 10%; left: 5%; }
+    .emblem.tr { top: 15%; right: 8%; }
+    .emblem.bl { bottom: 12%; left: 6%; }
+    .emblem.br { bottom: 10%; right: 7%; }
+
+    /* Unique hover effects for buttons */
+    .btn-knight {
+      position: relative;
+      overflow: hidden;
+      z-index: 1; /* Ensure button is on a stacking context */
+    }
+
+    .btn-knight > * { /* Ensure button text/icon is above the ripple */
+      position: relative;
+      z-index: 2;
+    }
+
+    .btn-knight::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1px;
+      height: 1px;
+      background: rgba(251, 191, 36, 0.2); /* Lighter ripple */
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: all 0.8s ease;
+      z-index: 1; /* Ripple is behind text but above button bg */
+    }
+
+    .btn-knight:hover::after {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(500);
+    }
+    
+    /* === STYLES FOR HOVER-LINKS === */
+    .hover-link-wrapper {
+      position: relative;     /* Allows us to position the image */
+      display: inline-block;  /* Keeps it in the flow of text */
+    }
+
+    .hover-image {
+      visibility: hidden;     /* Hidden by default */
+      opacity: 0;
+      position: absolute;
+      bottom: 120%;         /* Position it above the text */
+      left: 50%;
+      
+      width: 250px;         /* Increased from 200px */
+      aspect-ratio: 1/1;    /* Make it square */
+      object-fit: cover;    /* Fill the square (crops if needed) */
+      transform: translateX(-50%) scale(0.8); /* Start smaller for 'expand' effect */
+      
+      z-index: 60;          /* Make sure it's on top */
+      border: 2px solid #f97316;
+      border-radius: 12px; /* Slightly larger radius for a square */
+      box-shadow: 0 0 20px rgba(249, 115, 22, 0.5); /* Theme glow */
+      transition: all 0.3s ease;
+      pointer-events: none; /* Lets the mouse "pass through" to the link */
+    }
+
+    .hover-link-wrapper:hover .hover-image {
+      visibility: visible;
+      opacity: 1;
+      bottom: 130%; /* Adds a small "pop" up effect */
+      transform: translateX(-50%) scale(1); /* Grow to full size */
+    }
+
+    .hover-link {
+      color: #fbbf24; /* Makes text amber to show it's interactive */
+      font-weight: bold;
+      text-decoration: none; /* Removes underline */
+      transition: all 0.3s ease;
+    }
+
+    .hover-link:hover {
+      color: #e0fbfc; /* Glows to white on hover */
+      text-shadow: 0 0 8px #fbbf24;
+    }
+    /* === END OF HOVER-LINK STYLES === */
+    
+    
+    /* === Style for the active nav link === */
+    .nav-active {
+      color: #fbbf24 !important; /* This is text-amber-400 */
+    }
+    /* Style for the active nav link's underline */
+    .nav-active .nav-underline {
+      width: 100%;
+    }
+    /* === END OF NAV-LINK STYLES === */
+
+    /* === Nav Logo Hover Effect === */
+    .nav-logo {
+      transition: all 0.3s ease;
+      position: relative; /* Added for z-index stacking */
+      z-index: 90; /* Set a base stacking order */
+    }
+    .nav-logo:hover {
+      /* === CHANGED: Much bigger 2.5x expansion === */
+      transform: scale(4);
+      transform-origin: top left; /* Expands from the top-left corner */
+      z-index: 100; /* Ensures it's on top of other nav items */
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.7); /* Stronger glow */
+    }
+    /* === END OF NEW NAV LOGO EFFECT === */
+
+  </style>
+</head>
+<body class="overflow-x-hidden">
+
+  <div class="emblem tl"></div>
+  <div class="emblem tr"></div>
+  <div class="emblem bl"></div>
+  <div class="emblem br"></div>
+
+  <div id="progress-bar"></div>
+
+  <section id="hero" class="hero-bg relative text-white">
+    <div class="hero-overlay"></div>
+    <div class="container mx-auto px-6 h-full flex flex-col justify-center items-start z-10 relative">
+      <div class="mb-6">
+        <div class="text-amber-400 text-xl font-cinzel mb-2 opacity-80">ELECTRICAL ENGINEER & CREATOR</div>
+        <h1 class="text-6xl md:text-8xl font-bold mb-4 glow-text font-cinzel tracking-tight">Dhruv B Gowda</h1>
+      </div>
+      <p class="text-xl md:text-2xl mb-8 text-amber-100 max-w-lg font-light opacity-90">
+        Knight of the Molten Flame
+      </p>
+      <p class="text-lg mb-10 max-w-lg text-gray-200 leading-relaxed">
+        Welcome to my domain. I'm an engineer, intern, and builder, wielding innovation and creativity to build better experiences.
+      </p>
+      <a href="#about" class="inline-flex items-center bg-transparent border-2 border-amber-400 text-amber-400 px-8 py-4 rounded-full hover:bg-amber-400 hover:text-gray-900 transition-all duration-500 font-semibold btn-knight group">
+        <span>Explore My Vigil</span>
+        <i class="fas fa-long-arrow-alt-right ml-3 transition-transform duration-300 group-hover:translate-x-1"></i>
+      </a>
+    </div>
+    <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-amber-400 text-3xl scroll-down hover:text-amber-300 transition-colors">
+      <i class="fas fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-40 backdrop-blur-md border-b border-gray-800/70 transition-all duration-300">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-amber-400 text-2xl font-cinzel font-bold flex items-center">
+        <img src="logo.jpg" alt="Knights's Domain" class="w-10 h-10 rounded-2xl mr-3 object-cover border-2 border-amber-500/50 nav-logo">
+        Knight's Domain
+      </div>
+      <div class="hidden md:flex space-x-10">
+        <a href="#about" class="text-gray-300 hover:text-amber-400 transition-colors duration-300 font-medium relative group">
+          About
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full nav-underline"></span>
+        </a>
+        <a href="#skills" class="text-gray-300 hover:text-amber-400 transition-colors duration-300 font-medium relative group">
+          Skills
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full nav-underline"></span>
+        </a>
+        <a href="#projects" class="text-gray-300 hover:text-amber-400 transition-colors duration-300 font-medium relative group">
+          Projects
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full nav-underline"></span>
+        </a>
+        <a href="#contact" class="text-gray-300 hover:text-amber-400 transition-colors duration-300 font-medium relative group">
+          Contact
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full nav-underline"></span>
+        </a>
+      </div>
+      <div class="md:hidden">
+        <button id="menu-toggle" class="text-gray-300 hover:text-amber-400 transition-colors">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden bg-gray-900 bg-opacity-95 backdrop-blur-md hidden">
+      <div class="container mx-auto px-6 py-4 flex flex-col space-y-4 text-lg">
+        <a href="#about" class="text-gray-300 hover:text-amber-400 transition-colors py-2 border-b border-gray-800">About</a>
+        <a href="#skills" class="text-gray-300 hover:text-amber-400 transition-colors py-2 border-b border-gray-800">Skills</a>
+        <a href="#projects" class="text-gray-300 hover:text-amber-400 transition-colors py-2 border-b border-gray-800">Projects</a>
+        <a href="#contact" class="text-gray-300 hover:text-amber-400 transition-colors py-2">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="about" class="py-24 bg-gray-900 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-transparent via-gray-900/30 to-transparent pointer-events-none"></div>
+    <div class="container mx-auto px-6 relative">
+      <div class="flex flex-col md:flex-row items-center gap-16">
+        <div class="md:w-1/2 order-2 md:order-1">
+          <div class="space-y-8">
+            <div>
+              <span class="text-amber-400 text-xl font-cinzel mb-6 block opacity-80">The Knight's Vigil</span>
+              <h2 class="text-5xl md:text-6xl font-bold mb-8 text-white font-cinzel glow-text">Dhruv B Gowda</h2>
+            </div>
+            <p class="text-lg leading-relaxed text-gray-300">
+              I am a knight in training at the 
+              <span class="hover-link-wrapper">
+                <a href="https://en.wikipedia.org/wiki/Veermata_Jijabai_Technological_Institute" target="_blank" rel="noopener noreferrer" class="hover-link">VJTI institute</a>
+                <img src="vjti.jpeg" alt="VJTI" class="hover-image">
+              </span> 
+              in 
+              <span class="hover-link-wrapper">
+                <a href="https://en.wikipedia.org/wiki/Mumbai" target="_blank" rel="noopener noreferrer" class="hover-link">Mumbai</a>
+                <img src="Mumbai.jpeg" alt="Mumbai" class="hover-image">
+              </span>. 
+              I'm mastering the craft of <strong>Electrical Engineering</strong>, with my quest set to be complete in <strong>2028</strong>.
+            </p>
+            <p class="text-lg leading-relaxed text-gray-300">
+              I also serve as an intern at 
+              <span class="hover-link-wrapper">
+                <a href="https://superr.ai/" target="_blank" rel="noopener noreferrer" class="hover-link">superr.ai</a>
+                <img src="super.jpeg" alt="superr.ai" class="hover-image">
+              </span>, 
+              gaining real-world experience and honing my skills for the battles to come.
+            </p>
+            <p class="text-lg leading-relaxed text-gray-300">
+              When not at the forge, I am a dedicated weeb exploring the vast worlds of anime, manga, and manhwa. I also find peace in the arts of the mess hall (Cooking), listening to anthems of old (Music), and studying the designs of swift, mechanical steeds (Cars).
+            </p>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
+              <a href="#projects" class="bg-amber-500 text-gray-900 px-8 py-4 rounded-lg hover:bg-amber-400 transition-all duration-300 font-semibold text-center btn-knight shadow-lg hover:shadow-amber-500/25">
+                View My Projects
+              </a>
+              <a href="#contact" class="border border-amber-500 text-amber-400 px-8 py-4 rounded-lg hover:bg-amber-500 hover:text-gray-900 transition-all duration-300 font-semibold text-center btn-knight">
+                Send a Missive
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 order-1 md:order-2">
+          <div class="relative">
+            <div class="absolute inset-0 bg-amber-500/20 rounded-2xl blur-3xl animate-pulse"></div>
+            <img src="dhruv-photo.jpg" 
+                 alt="Dhruv B Gowda" 
+                 class="rounded-2xl shadow-2xl azure-glow relative z-10 w-full h-auto transform hover:scale-[1.02] transition-transform duration-500"/>
+            <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-amber-500/20 rounded-2xl blur-xl"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="py-24 bg-gradient-to-b from-gray-800 to-gray-900 relative">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22><path d=%22M10 0l2.5 7.5L20 10l-7.5 2.5L10 20l-2.5-7.5L0 10l7.5-2.5L10 0z%22 fill=%22rgba(249, 115, 22, 0.05)%22/></svg>')] opacity-10"></div>
+    <div class="container mx-auto px-6 relative">
+      <div class="text-center mb-16">
+        <span class="text-amber-400 text-xl font-cinzel mb-4 block opacity-80">My Armory</span>
+        <h2 class="text-5xl md:text-6xl font-bold text-white font-cinzel glow-text">Skills & Abilities</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        
+        <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-gray-700/50 hover:border-amber-500/50 transition-all duration-500 group hover:transform hover:scale-105 azure-glow">
+          <div class="flex items-center mb-6">
+            <div class="text-amber-400 text-4xl mr-4 group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-microchip"></i>
+            </div>
+            <h3 class="text-2xl font-semibold text-white">Circuit Smithing</h3>
+          </div>
+          <p class="text-gray-400 mb-6">Hands-on art of joining components to create functional hardware.</p>
+          <div class="skill-bar"><div class="skill-progress" data-width="85%"></div></div>
+          <div class="text-sm text-amber-400 mt-2 flex items-center">
+            <i class="fas fa-tools mr-2"></i> Prototyping & Soldering
+          </div>
+        </div>
+
+        <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-gray-700/50 hover:border-amber-500/50 transition-all duration-500 group hover:transform hover:scale-105 azure-glow">
+          <div class="flex items-center mb-6">
+            <div class="text-amber-400 text-4xl mr-4 group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-drafting-compass"></i>
+            </div>
+            <h3 class="text-2xl font-semibold text-white">Forge Blueprints</h3>
+          </div>
+          <p class="text-gray-400 mb-6">Creating detailed schematics for constructs and siege engines.</p>
+          <div class="skill-bar"><div class="skill-progress" data-width="90%"></div></div>
+          <div class="text-sm text-amber-400 mt-2 flex items-center">
+            <i class="fas fa-pencil-ruler mr-2"></i> CAD Design
+          </div>
+        </div>
+
+        <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-gray-700/50 hover:border-amber-500/50 transition-all duration-500 group hover:transform hover:scale-105 azure-glow">
+          <div class="flex items-center mb-6">
+            <div class="text-amber-400 text-4xl mr-4 group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <h3 class="text-2xl font-semibold text-white">Mess Hall Provisions</h3>
+          </div>
+          <p class="text-gray-400 mb-6">Crafting provisions that fuel a warrior for the march and melee.</p>
+          <div class="skill-bar"><div class="skill-progress" data-width="95%"></div></div>
+          <div class="text-sm text-amber-400 mt-2 flex items-center">
+            <i class="fas fa-pepper-hot mr-2"></i> Cooking
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="py-24 bg-gray-900 relative">
+    <div class="container mx-auto px-6 relative">
+      <div class="text-center mb-16">
+        <span class="text-amber-400 text-xl font-cinzel mb-4 block opacity-80">Chronicles of Valor</span>
+        <h2 class="text-5xl md:text-6xl font-bold text-white font-cinzel glow-text">Engineering Forge</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:max-w-4xl lg:mx-auto">
+        
+        <div class="project-card bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl border border-gray-700/30 group hover:border-amber-500/50 transition-all duration-500">
+          <div class="relative overflow-hidden">
+            <img src="ornithopter.jpg" 
+                 alt="RC Ornithopter" 
+                 class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700 azure-glow cursor-pointer"
+                 onclick="openModal('ornithopter.jpg')"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-amber-400 transition-colors">Mechanical Sky-Scout</h3>
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              An RC ornithopter prototype. This construct mimics a bird's flight for reconnaissance, with a focus on wireless communication.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="bg-amber-900/50 text-amber-200 px-3 py-1 text-sm rounded-full border border-amber-700/30">CAD</span>
+              <span class="bg-gray-700/50 text-gray-200 px-3 py-1 text-sm rounded-full border border-gray-600/30">Embedded Systems</span>
+              <span class="bg-indigo-900/50 text-indigo-200 px-3 py-1 text-sm rounded-full border border-indigo-700/30">Wireless Comm</span>
+            </div>
+            <a href="https://github.com/MAX090706/RC-ORNITHOPTER" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 inline-flex items-center transition-colors group/link">
+              <span>View on GitHub</span>
+              <i class="fas fa-external-link-alt ml-2 transform group-hover/link:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl border border-gray-700/30 group hover:border-amber-500/50 transition-all duration-500">
+          <div class="relative overflow-hidden">
+            <img src="walle.jpg" 
+                 alt="Line Following Bot" 
+                 class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700 azure-glow cursor-pointer"
+                 onclick="openModal('walle.jpg')"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          </div>
+          <div class="p-8">
+            <h3 class="text-2xl font-semibold text-white mb-4 group-hover:text-amber-400 transition-colors">Autonomous Pathfinder</h3>
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              A loyal line-following bot. This automaton is enchanted to follow a set path, proving its worth for delivering supplies or messages.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+              <span class="bg-amber-900/50 text-amber-200 px-3 py-1 text-sm rounded-full border border-amber-700/30">Robotics</span>
+              <span class="bg-red-900/50 text-red-200 px-3 py-1 text-sm rounded-full border border-red-700/30">SRA-VJTI</span>
+              <span class="bg-gray-700/50 text-gray-200 px-3 py-1 text-sm rounded-full border border-gray-600/30">Prototyping</span>
+            </div>
+            <a href="https://github.com/SRA-VJTI/Wall-E" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 inline-flex items-center transition-colors group/link">
+              <span>View on GitHub</span>
+              <i class="fas fa-external-link-alt ml-2 transform group-hover/link:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-24 bg-gradient-to-b from-gray-800 to-black relative">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22><path d=%22M20 3l5 10L37 15l-8 8 2 12-10-5-10 5 2-12-8-8 12-2z%22 fill=%22rgba(249, 115, 22, 0.03)%22/></svg>')] opacity-20"></div>
+    <div class="container mx-auto px-6 relative">
+      <div class="text-center mb-16">
+        <span class="text-amber-400 text-xl font-cinzel mb-4 block opacity-80">The Summoning Circle</span>
+        <h2 class="text-5xl md:text-6xl font-bold text-white font-cinzel glow-text">Contact Me</h2>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-gray-900/80 backdrop-blur-sm p-10 rounded-3xl shadow-2xl border border-gray-700/40 azure-glow text-center">
+          
+          <p class="text-lg text-gray-300 mb-8">
+            Have a quest, a query, or a collaboration in mind? Reach out through my social channels or send a missive directly to my inbox.
+          </p>
+          
+          <div class="mt-8 pt-8 border-t border-gray-700/50">
+            <div class="flex justify-center space-x-8 text-4xl text-gray-400 mb-10">
+              <a href="https://github.com/KernelKnight33" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-transform duration-300 hover:scale-110" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/dhruv-gowda-822343383/" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition-transform duration-300 hover:scale-110" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+              </a>
+            </div>
+            <a href="mailto:dhruvgowda09@gmail.com" class="bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white font-semibold px-10 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-orange-500/25 btn-knight relative overflow-hidden group">
+              <span class="relative z-10">Send a Raven</span>
+              <i class="fas fa-paper-plane ml-3 relative z-10 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-black py-12 border-t border-gray-800">
+    <div class="container mx-auto px-6 text-center">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <div class="text-amber-400 text-2xl font-cinzel font-bold flex items-center justify-center md:justify-start">
+            <img src="logo.jpg" alt="Dhruv B Gowda" class="w-10 h-10 rounded-2xl mr-3 object-cover border-2 border-amber-500/50 nav-logo">
+            Dhruv B Gowda
+          </div>
+          <p class="text-gray-500 mt-2 text-sm">Knight of the Molten Flame</p>
+        </div>
+        <div class="text-center md:text-right">
+          <p class="text-gray-500 mb-2">© <span id="year"></span> Dhruv B Gowda. All rites reserved.</p>
+          <p class="text-gray-600 text-sm">Forged in the fires of passion and tempered by experience.</p>
+        </div>
+      </div>
+      <div class="mt-8 pt-8 border-t border-gray-800/50">
+        <p class="text-gray-600 text-sm">By visiting this realm, you have sworn the Oath of Respect.<br>Violators shall be banished to the land of 404 errors.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="document.getElementById('imageModal').style.display='none'">&times;</span>
+      <img class="modal-img" src="" alt="Project Enlarged"/>
+    </div>
+  </div>
+
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile Menu Toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+      
+      // Animate menu items
+      if (!menu.classList.contains('hidden')) {
+        const items = menu.querySelectorAll('a');
+        items.forEach((item, index) => {
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(-10px)';
+          setTimeout(() => {
+            item.style.transition = 'all 0.5s ease';
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+          }, 50 * index);
+        });
+      }
+    });
+
+    // Close mobile menu when clicking on links
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.add('hidden');
+      });
+    });
+
+    // Scroll Progress Bar
+    window.onscroll = function() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("progress-bar").style.width = scrolled + "%";
+    };
+
+    // Animate skill bars on scroll
+    const skillBars = document.querySelectorAll('.skill-progress');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const width = entry.target.getAttribute('data-width');
+          entry.target.style.width = width;
+        }
+      });
+    }, { threshold: 0.5 });
+
+    skillBars.forEach(bar => {
+      observer.observe(bar);
+    });
+
+    // Animate project cards on scroll
+    const projectCards = document.querySelectorAll('.project-card');
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    projectCards.forEach(card => {
+      cardObserver.observe(card);
+    });
+
+    // --- Live Navigation (Scroll Spy) ---
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+    const observerOptions = {
+      root: null, // observes intersections relative to the viewport
+      rootMargin: '0px',
+      threshold: 0.5 // 50% of the item must be visible
+    };
+
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          
+          // Remove active class from all nav links
+          navLinks.forEach(link => {
+            link.classList.remove('nav-active');
+          });
+
+          // Add active class to current links (both mobile and desktop)
+          // We must check if a link exists, because the "hero" section has no nav link
+          const activeLinks = document.querySelectorAll(`nav a[href="#${id}"]`);
+          if (activeLinks.length > 0) {
+            activeLinks.forEach(link => {
+              link.classList.add('nav-active');
+            });
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+    // --- END: Live Navigation ---
+
+
+    // Image Modal
+    function openModal(src) {
+      const modal = document.getElementById('imageModal');
+      const img = modal.querySelector('.modal-img');
+      img.src = src;
+      modal.style.display = 'flex';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('imageModal').onclick = function(e) {
+      if (e.target === this || e.target.classList.contains('close-modal')) {
+        this.style.display = 'none';
+      }
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        // Close mobile menu if open
+        document.getElementById('mobile-menu').classList.add('hidden');
+        
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80, // Offset for fixed nav bar
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Add subtle parallax to hero section
+    window.addEventListener('scroll', function() {
+      const heroContent = document.querySelector('.hero-bg .container');
+      const scrollPosition = window.pageYOffset;
+      // Move content up faster than scroll, creating parallax
+      heroContent.style.transform = 'translateY(' + scrollPosition * 0.3 + 'px)'; 
+      heroContent.style.opacity = 1 - (scrollPosition / 500);
+    });
+  </script>
+
+</body>
+</html>
